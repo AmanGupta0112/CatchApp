@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body_block %}
+<!-- ['app_id', 'url', 'icon', 'title', 'developer', 'developer_id', 'description', 'score', 'full_price', 'price', 'free']) -->
+<div class="container-fluid">
+  <div class="col-md-10 ml-auto mr-auto my-4">
+          <h2 class="title" style=" text-align: center;" > <b> New Applications </b> </h2>
+          <br>
+          <div class="row">
+            {% for app in New_apps %}
+            <div class="col-sm-4 my-2">
+              <div class="card card-plain card-blog">
+                <div class="card-header card-header-image">
+                    <img class="img img-raised" src="{{app.icon}}">
+                <div class="colored-shadow" style="background-image: url(); opacity: 1;"></div></div>
+                <div class="card-body">
+                  <h6 class="card-category text-info"></h6>
+                  <h4 class="card-title">
+                    <a href="https://play.google.com{{app.url}}">{{app.title}}</a>
+                  </h4>
+                  <p class="card-description">
+                  {{app.description}}
+                  </p>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="container my-3" style=" text-align:center; color:white;" >
+        <button type="button" class="btn btn-success padx-5"  name="Show More" ><a href="#" style=" text-align:center; color:white;">Show More!</a></button>
+      </div>
+{% endblock %}

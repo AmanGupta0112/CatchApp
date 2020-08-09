@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body_block %}
+
+<div class="container">
+    <div class="row">
+      <div class="col">
+        <h1 class="section__heading section_header__heading text-center my-5">
+          About Us
+        </h1>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+			<div class="row">
+				<div class="col-sm-6 align-self-start">
+						<img src="{% static 'images/about1.png' %}" class="img-fluid" alt="">
+				</div>
+        				<div class="col-sm-6 align-self-center">
+                  <div class="jumbotron">
+					               <h2  class="text-center "><b>WHY WE CREATE THIS ?</b></h2>
+					                    <p>
+						                    Now a days to find a platform which provide application, website as well as software's details with analysis is hard. At this time mostly used thing by any kind of people is mobile application and websites, for some technical peoples also uses software. For that they have no idea which kind of thing they are using because in application we see comments but in website and software we did not find any comments, because comments helps user to decide which thing is better for him/her.so in CatchApp system provide application, website and software's details and analysis result(which is based on many comments) as well as suggestion according to their demographical data(age, profession, interest, gender, education etc.) .so if they use CatchApp they knows about other new application, website or software which is useful for them, and other functionalities like they add any of three to their profile so they can use them in future .
+					                  </p>
+                  </div>
+				</div>
+			</div>
+		</div>
+
+  <section class="section section_quote section_gray">
+  <div class="jumbotron mx-0 padx-0">
+    <div class="row">
+      <div class="col col-md-8 ml-md-auto mr-md-auto">
+
+        <!-- Blockquote -->
+        <blockquote class="section_quote__blockquote">
+          <h3 class="text-center my-3 padx-0">HOW SYSTEM WORKS?</h3>
+          <p class="text-center ">
+              In our system user can search Application,Website and Software and then they get a result page according to their search which includes Data & Analysis,on other side their personlized dashboard having suggestion(Application,Website and Software)based on their demographical data . User can also add these to their profile for future use.
+          </p>
+        </blockquote>
+
+      </div>
+    </div> <!-- / .row -->
+  </div> <!-- / .container -->
+</section>
+
+{% endblock %}

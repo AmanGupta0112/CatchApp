@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url,include
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
 
@@ -28,4 +30,4 @@ urlpatterns = [
     url(r'^accounts/',include('RetryAccount.urls',namespace='accounts')),
     url(r'^RetryApp/',include('RetryApp.urls',namespace='RetryApp')),
     url(r'^accounts/', include('django.contrib.auth.urls')),
-]
+]   + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

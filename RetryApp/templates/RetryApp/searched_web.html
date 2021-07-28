@@ -3,43 +3,62 @@
 {% block body_block %}
 
 
-
+<!-- field_name,g_ranks_val,c_ranks_val,disc,Traffic_val,search_tra,p_search_tra,backlinks,logo -->
 <div class="container">
 
   <div class="row align-items-center">
   <div class="col-sm-4" >
   <div class="h-100">
-  <img style="height: 205px;width: 205px;" src="{{img_logo}}" alt="Image" class="img-feature img-fluid">
+  <img style="height: 205px;width: 205px;" src="{{logo}}" alt="Image" class="img-feature img-fluid">
   </div>
   </div>
   <div class="col-sm-8 ml-auto my-1">
   <div class="mb-5">
   <h3 class="d-flex align-items-center my-3">{{title}}</h3>
-   <a href="https://www.similarweb.com/website/"+"'" + "{{title}}" + "'"><button type="button" class="btn btn-success" style="position: absolute;right: 10px; " >Visit</button></a>
+   <a href="{{field_name}}"><button type="button" class="btn btn-success" style="position: absolute;right: 10px; " >Visit</button></a>
    <p>
-     {% for i in field_name %}
-     {{i}}
-     {% endfor %}
-     Total Visits : {{Traffic_val}}
-     Avg. Visit Duration : {{Traffic_val}}
-     Pages per Visit : {{Traffic_val}}
-     Bounce Rate : {{Traffic_val}}
-     {% for i in country_traf %}
-     {{i}}
-     {% endfor %}
-   </p>
-   <h2>Audience Interests:-</h2>
-   <h4>Categories:-</h4>
-   {% for i in range(5) %}
-    {{audiance_interest[i]}}
-   {% endfor %}
+     Total Visits : {{Traffic_val}}<br>
+     Global Rank : {{g_ranks_val}}<br>
+     Country Rank : {{c_ranks_val}}<br>
+     Searched Traffic Value  : {{search_tra}}<br>
+     Paid Traffic Value  : {{p_search_tra}}<br>
+     Backlinks : {{backlinks}}
+  </p>
   </div>
   </div>
   <div class="container">
     <div class="jumbotron">
     <h3 style=" text-align:  center; " > <strong> <u>Description</u></strong></h3><br>
-    <p>{{desc}}</p>
+    <p>{{disc}}</p>
     </div>
+    {% if user.is_authenticated %}
+    <div class="row">
+      <div class="col-sm-4 my-2">
+        <div class="card card-plain card-blog">
+          <div class="card-header card-header-image">
+              <img class="img img-raised" src="https://cdn.pixabay.com/photo/2019/02/19/19/45/thumbs-up-4007573_960_720.png" width="320" height='230'>
+          <div class="colored-shadow" style="background-image: url(); opacity: 1;"></div></div>
+          <p style="text-align:center"><strong>Positive</strong> - {{sa_ls.pos}}%</p>
+        </div>
+      </div>
+      <div class="col-sm-4 my-2">
+        <div class="card card-plain card-blog">
+          <div class="card-header card-header-image">
+              <img class="img img-raised" src="https://freepngimg.com/thumb/emoji/102350-cute-whatsapp-emoji-free-png-hq.png"width="300" height='230'>
+          <div class="colored-shadow" style="background-image: url(); opacity: 1;"></div></div>
+          <p style="text-align:center"><strong>Neutral</strong> - {{sa_ls.neu}}%</p>
+        </div>
+      </div>
+      <div class="col-sm-4 my-2">
+        <div class="card card-plain card-blog">
+          <div class="card-header card-header-image">
+              <img style=" align-items: auto; " class="img img-raised" src="https://freepngimg.com/thumb/emoji/73705-emoticon-sticker-smiley-facebook-emoji-download-free-image.png" width="300" height='230'>
+          <div class="colored-shadow" style="background-image: url(); opacity: 1;"></div></div>
+          <p style="text-align:center"><strong>Negative</strong> - {{sa_ls.neg}}%</p>
+        </div>
+      </div>
+    </div>
+    {% endif %}
   </div>
   <div class="col-sm-6">
   <div class="mb-5">

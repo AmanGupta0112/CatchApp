@@ -44,9 +44,38 @@
       <div class="col-md-2 col-xs-2 mb-grid-gutter pb-3" style="margin-right:33px;">
         <img class="card-img" src="{{i}}" style="height: 270px;width: 200px; align: center; ">
       </div>
-      {% endfor %}
-      </div>
+    {% endfor %}
   </div>
+
+  </div>
+  {% if user.is_authenticated %}
+  <div class="row">
+    <div class="col-sm-4 my-2">
+      <div class="card card-plain card-blog">
+        <div class="card-header card-header-image">
+            <img class="img img-raised" src="https://cdn.pixabay.com/photo/2019/02/19/19/45/thumbs-up-4007573_960_720.png" width="320" height='230'>
+        <div class="colored-shadow" style="background-image: url(); opacity: 1;"></div></div>
+        <p style="text-align:center"><strong>Positive</strong> - {{sa_ls.pos}}%</p>
+      </div>
+    </div>
+    <div class="col-sm-4 my-2">
+      <div class="card card-plain card-blog">
+        <div class="card-header card-header-image">
+            <img class="img img-raised" src="https://freepngimg.com/thumb/emoji/102350-cute-whatsapp-emoji-free-png-hq.png"width="300" height='230'>
+        <div class="colored-shadow" style="background-image: url(); opacity: 1;"></div></div>
+        <p style="text-align:center"><strong>Neutral</strong> - {{sa_ls.neu}}%</p>
+      </div>
+    </div>
+    <div class="col-sm-4 my-2">
+      <div class="card card-plain card-blog">
+        <div class="card-header card-header-image">
+            <img style=" align-items: auto; " class="img img-raised" src="https://freepngimg.com/thumb/emoji/73705-emoticon-sticker-smiley-facebook-emoji-download-free-image.png" width="300" height='230'>
+        <div class="colored-shadow" style="background-image: url(); opacity: 1;"></div></div>
+        <p style="text-align:center"><strong>Negative</strong> - {{sa_ls.neg}}%</p>
+      </div>
+    </div>
+  </div>
+  {% endif %}</div>
 </div>
-</div>
+
 {% endblock %}

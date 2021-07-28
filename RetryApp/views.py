@@ -8,6 +8,10 @@ from django.views import generic
 from django.core.mail import send_mail
 import os
 from .searched import AppDetails,SoftwareDetails,WebsiteDetails
+from .comment_analysis import Sentiment_Analysis as csa
+from .twitters_App import Sentiment_Analysis as tsa
+from .rec import Recommend
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 class ContactUsView(generic.FormView):
@@ -62,47 +66,106 @@ class NewApp(generic.TemplateView):
         context['New_apps'] = AppDetails().NewRelease()
         return context
 
+class TreApp(generic.TemplateView):
+    template_name = 'RetryApp/tre_app.html'
+    def get_context_data(self,*args,**kwargs):
+        context = super(TreApp,self).get_context_data(*args, **kwargs)
+        context['Tre_app'] = AppDetails().Trending()
+        return context
+
 class NewSoft(generic.TemplateView):
     template_name = 'RetryApp/newsoft.html'
+    def get_context_data(self,*args,**kwargs):
+        context = super(NewSoft,self).get_context_data(*args, **kwargs)
+        context['New_soft'] = SoftwareDetails().NewRelease()
+        return context
+
+class TreSoft(generic.TemplateView):
+    template_name = 'RetryApp/tresw.html'
+    def get_context_data(self,*args,**kwargs):
+        context = super(TreSoft,self).get_context_data(*args, **kwargs)
+        context['Tre_soft'] = SoftwareDetails().Trending()
+        return context
 
 class NewWeb(generic.TemplateView):
     template_name = 'RetryApp/newweb.html'
 
 def searchview(request):
+    # import pdb; pdb.set_trace()
 
     option = request.GET.get('dropdown')
 
     if option == 'Application':
         ans = request.GET.get('search-box')
+        # import pdb; pdb.set_trace()
         app_info,app_detail = AppDetails().searchapp(ans)
-        rating = round(app_info['score'],2)
-        return render(request,'RetryApp/searched_app.html',{'app_info':app_info,'appdetail':app_detail,"rating":rating})
+        try:
+            sa_ls = tsa.Analysis(str(ans))
+            rating = round(app_info['score'],2)
+        except:
+            rating = ""
+            sa_ls = ''
+        return render(request,
+                      'RetryApp/searched_app.html',
+                      {
+                      'app_info':app_info,
+                      'appdetail':app_detail,
+                      "rating":rating,
+                      "sa_ls":sa_ls,
+                      })
 
     elif option == 'Software':
         ans = request.GET.get('search-box')
         logo,download,detail,disc =  SoftwareDetails().searchedsoftware(ans)
+        sa_ls = tsa.Analysis(ans)
         data = {
         "Title":detail[1],
         "Size":detail[3],
         "Requirements":detail[5],
-        "Language":detail[7],
+        "Language":detail[7][:34],
         "Available_languages":detail[9],
         "Price":detail[11]
         }
-        return render(request,'RetryApp/searched_soft.html',{'logo':logo,"download":download,'detail':data,'disc':disc[0]})
+        return render(request,
+                     'RetryApp/searched_soft.html',
+                     {
+                     'logo':logo,
+                     "download":download,
+                     'detail':data,
+                     'disc':disc[0],
+                     "sa_ls":sa_ls,
+                     })
 
     elif option == 'WebSites':
         ans = request.GET.get('search-box')
-        field_name,ranks_val,desc,Traffic_val,country_traf,country_traf_val,audiance_interest,img_logo = WebsiteDetails().searchedwebsite(ans)
-        return render(request,'RetryApp/searched_web.html',
-        {"field_name":field_name,
-        "title" : ans+".com",
-        "ranks_val":ranks_val,
-        "desc":desc,
-        "Traffic_val":Traffic_val,
-        "country_traf":country_traf,
-        "country_traf_val":country_traf_val,
-        "audiance_interest":audiance_interest,
-        "img_logo":img_logo})
+
+        url,field_name,g_ranks_val,c_ranks_val,disc,Traffic_val,search_tra,p_search_tra,backlinks,logo = WebsiteDetails().searchedwebsite(ans)
+        sa_ls = tsa.Analysis(ans)
+        return render(request,
+                     'RetryApp/searched_web.html',
+                     {
+                     "field_name":url,
+                     'disc':disc,
+                     "title" : ans + ".com",
+                     "g_ranks_val":g_ranks_val,
+                     "c_ranks_val":c_ranks_val,
+                     "Traffic_val":Traffic_val,
+                     "search_tra":search_tra,
+                     "p_search_tra":p_search_tra,
+                     "backlinks":backlinks,
+                     "logo":logo,
+                     "sa_ls":sa_ls,
+                     })
     else:
         return HttpResponse("Select the option first")
+
+
+@login_required
+def RecommendationView(request):
+    request_post=request
+    app_data , sw_dict = Recommend(request_post)
+    context = {
+    "app_data" : app_data,
+    "sw_data" : sw_dict
+    }
+    return render(request,'RetryApp/reccomend.html',context)

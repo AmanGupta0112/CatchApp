@@ -15,13 +15,17 @@ class SignUp(generic.CreateView):
     template_name = 'accounts/signup.html'
 
 class ProfileView(LoginRequiredMixin,generic.CreateView):
-
+    model = Profile
     form_class = ProfileForm
-    success_url = reverse_lazy('home')
-    template_name = 'accounts/profile.html'
+    success_url = reverse_lazy('accounts:detail')
+    template_name = "accounts/profile.html"
+
+class ProfileDetail(LoginRequiredMixin,generic.TemplateView):
+    template_name = "accounts/detail.html"
+
 
 class UpdateProfile(LoginRequiredMixin,generic.UpdateView):
-    model = User
+    model = Profile
     form_class = ProfileForm
-    success_url = reverse_lazy('home')
-    template_name = 'accounts/profile.html'
+    success_url = reverse_lazy('accounts:detail')
+    template_name = 'accounts/update.html'

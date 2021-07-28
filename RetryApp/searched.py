@@ -19,6 +19,10 @@ class AppDetails():
         app = ps.search("New Release",page=1)
         return app
 
+    def Trending(self):
+        app = ps.search("Trending",page=1)
+        return app
+
 class SoftwareDetails():
 
     def searchedsoftware(self,soft):
@@ -26,67 +30,123 @@ class SoftwareDetails():
         disc = []
         result = rs.get("https://filehippo.com/search/?q="+str(soft))
         soup = bs(result.text,"html.parser")
-        list = soup.findAll('li',{'class':'list-programs__item'})
-        url = list[1].a['href']
-        final_re = rs.get(url)
-        f_soup = bs(final_re.text,'html.parser')
-        down = f_soup.findAll('div',{"class":"program-actions-header__download"})
-        download = down[0].a['href']
-        img = f_soup.findAll('div',{"class":"media__image"})
-        logo = img[0].img['src']
-        content = f_soup.findAll('dl',{"class":"program-technical"})
-        for dd in content[0]:
-            detail.append(dd.text)
+        list_d = soup.findAll('li',{'class':'list-programs__item'})
+        try:
+            url = list_d[1].a['href']
+            final_re = rs.get(url)
+            f_soup = bs(final_re.text,'html.parser')
+            down = f_soup.findAll('div',{"class":"program-actions-header__download"})
+            download = down[0].a['href']
+            img = f_soup.findAll('div',{"class":"media__image"})
+            logo = img[0].img['src']
+            content = f_soup.findAll('dl',{"class":"program-technical"})
+            for dd in content[0]:
+                detail.append(dd.text)
 
-        disr = f_soup.findAll('article',{"class":"program-description"})
-        for p in disr[0]:
-            disc.append(p.text)
-
+            disr = f_soup.findAll('article',{"class":"program-description"})
+            count =0
+        except:
+            pass
+        try:
+            disc.append(disr[0].text)
+        except:
+            for p in disr[0]:
+                count+= 1
+                if count == 3:
+                    disc.append(p.text)
+                else:
+                    msg = "No discription available"
+                    disc.append(msg)
         return (logo,download,detail,disc)
+
+    def NewRelease(self):
+
+        data_dict = {}
+        result = rs.get("https://download.cnet.com/windows/?sort=newReleases")
+        soup = bs(result.text,"html.parser")
+        #
+        list_d = soup.findAll('div',{'class':'c-globalCard lg:u-col-3 md:u-col-3 sm:u-col-2 c-productCard u-flexbox-column c-productCard-detailed'})
+
+        for i in range(0,20):
+            data_list = []
+            try:
+                title = list_d[i].text.split("\n")[1]
+                data_list.append(title)
+                disc = list_d[i].text.split("\n")[0]
+                data_list.append(disc)
+                img =  list_d[i].img['src']
+                data_list.append(img)
+                url = "https://download.cnet.com" +str(list_d[i].a['href'])
+                data_list.append(url)
+            except:
+                pass
+            data_dict[i] = data_list
+        return(data_dict)
+
+
+    def Trending(self):
+
+        data_dict = {}
+        result = rs.get("https://download.cnet.com/windows/?sort=mostPopular")
+        soup = bs(result.text,"html.parser")
+        list_d = soup.findAll('div',{'class':'c-globalCard lg:u-col-3 md:u-col-3 sm:u-col-2 c-productCard u-flexbox-column c-productCard-detailed'})
+
+        for i in range(0,20):
+            data_list = []
+            try:
+                title = list_d[i].text.split("\n")[1]
+                data_list.append(title)
+                disc = list_d[i].text.split("\n")[0]
+                data_list.append(disc)
+                img =  list_d[i].img['src']
+                data_list.append(img)
+                url = "https://download.cnet.com" +str(list_d[i].a['href'])
+                data_list.append(url)
+            except:
+                pass
+            data_dict[i] = data_list
+        return(data_dict)
+
+
 
 class WebsiteDetails():
 
     def searchedwebsite(self,web):
-        ranks_val = []
-        field_name = []
-        Traffic_val = []
-        country_traf = []
-        country_traf_val =[]
-        audiance_interest = []
-        url = 'https://www.similarweb.com/website/'+str(web)+'.com/'
-        handler = urlopen('https://api.proxycrawl.com/?token=DBFO18FPHMUm0En4IYFQig&url=' + url)
-        result = handler.read()
-        time.sleep(5)
-        soup = bs(result,'html.parser')
-        ranks = soup.findAll('div',{'class':'websiteRanks-container'})
+        
+        url = 'https://www.semrush.com/website/'+str(web)+'.com/'
+        try:
+            result = rs.get(url)
 
-        name = ranks[0].find_all('a',{'class':"websiteRanks-nameText"})
-        for i in range(len(name)):
-            field_name.append(name[i].text)
-        time.sleep(1)
-        logo = soup.findAll('img',{'class':'websiteHeader-screenImg'})
-        img_logo = logo[0]['src']
-        time.sleep(1)
-        rank = ranks[0].find_all('div',{'class':"websiteRanks-valueContainer js-websiteRanksValue"})
-        for i in range(len(rank)):
-            ranks_val.append(rank[i].text.split())
-        time.sleep(1)
-        desc = soup.findAll('div',{'class':'websiteHeader-companyDescriptionWrapper'})[0].p.text
+            soup = bs(result.text,'html.parser')
+            data = soup.findAll('div',{'class':'___SFlex_11qft_gg_'})
 
-        Traffic_over = soup.findAll('span',{'class':'engagementInfo-valueNumber js-countValue'})
-        for i in range(len(Traffic_over)):
-            Traffic_val.append(Traffic_over[i].text)
-        time.sleep(1)
-        coun_tra = soup.findAll('a',{'class':'country-name country-name--link'})
-        for i in range(len(coun_tra)):
-            country_traf.append(coun_tra[i].text)
+            disc = soup.findAll('p',{'class':'___SText_6st4r_gg_ __color_6st4r_gg_ __fontSize_6st4r_gg_ __lineHeight_6st4r_gg_'})[3].text
 
-        coun_tra_val = soup.findAll('span',{'class':'traffic-share-valueNumber js-countValue'})
-        for i in range(len(coun_tra_val)):
-            country_traf_val.append(coun_tra_val[i].text)
+            field_name = data[1].text
 
-        audiance = soup.findAll('a',{'class':'audienceCategories-itemLink'})
-        for i in range(len(audiance)):
-            audiance_interest.append(audiance[i].text)
 
-        return (field_name,ranks_val,desc,Traffic_val,country_traf,country_traf_val,audiance_interest,img_logo)
+            logo = soup.findAll('img',{'class':'Favicon__img___3IQrT'})[0]['src']
+
+            g_ranks_val = data[3].text
+            c_ranks_val = data[4].text
+
+            Traffic_val = data[6].text
+            search_tra = data[8].text
+            p_search_tra = data[10].text
+            backlinks = data[12].text
+        except:
+            field_name = ""
+
+            disc = ""
+            logo = ""
+
+            g_ranks_val =""
+            c_ranks_val = ""
+
+            Traffic_val = ""
+            search_tra = ""
+            p_search_tra = ""
+            backlinks = ""
+
+
+        return (url,field_name,g_ranks_val,c_ranks_val,disc,Traffic_val,search_tra,p_search_tra,backlinks,logo)

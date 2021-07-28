@@ -4,10 +4,10 @@
 <!-- ['app_id', 'url', 'icon', 'title', 'developer', 'developer_id', 'description', 'score', 'full_price', 'price', 'free']) -->
 <div class="container-fluid">
   <div class="col-md-10 ml-auto mr-auto my-4">
-          <h2 class="title" style=" text-align: center;" > <b> New Applications </b> </h2>
+          <h2 class="title" style=" text-align: center;" > <b> Trending Applications </b> </h2>
           <br>
           <div class="row">
-            {% for app in New_apps %}
+            {% for app in Tre_app %}
             <div class="col-sm-4 my-2">
               <div class="card card-plain card-blog">
                 <div class="card-header card-header-image">
@@ -29,6 +29,6 @@
         </div>
       </div>
       <div class="container my-3" style=" text-align:center; color:white;" >
-        <button type="button" class="btn btn-success padx-5"  name="Show More" ><a href="{% url 'RetryApp:newapp' %}" style=" text-align:center; color:white;">Show More!</a></button>
+        <button type="button" class="btn btn-success padx-5"  name="Show More" ><a href="{% url 'RetryApp:treapp' %}" style=" text-align:center; color:white;">Show More!</a></button>
       </div>
 {% endblock %}

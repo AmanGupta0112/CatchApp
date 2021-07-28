@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+{% block body_block %}
+
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
+    <h1 class="h3 mb-0 text-gray-800">Profile</h1>
+    </div>
+
+    <!-- Main Content Here -->
+    <div class="row">
+      <div class="col-lg-2"></div>
+      <div class="col-lg-3 my-5">
+        <img class="img-circle" src="{{user.profile.image.url}}" style=" border-radius: 50px;  "  height="450px" width="300px">
+      </div>
+      <div class="card o-hidden border-0 shadow-lg my-5 col-lg-5" style="border-radius: 20px;">
+        <div class="card-body">
+          <p><strong>Username: </strong> {{user.username}} </p>
+          <p><strong>Email: </strong> {{user.email}} </p>
+          <p><strong>Age: </strong> {{user.profile.Age}} </p>
+          <p><strong>Gender: </strong> {{user.profile.Gender}} </p>
+          <p><strong>Education: </strong> {{user.profile.Education}} </p>
+          <p><strong>Profession: </strong> {{user.profile.Profession}} </p>
+          <p><strong>State: </strong> {{user.profile.State}} </p>
+          <p><strong>Income: </strong> {{user.profile.Income}} </p>
+          <p><strong>Interest: </strong> {{user.profile.Interest}} </p>
+          <a class="btn btn-primary" href="{% url 'accounts:update' pk=user.pk %}">Update Profile</a>
+          <a class="btn btn-primary" href="{% url 'RetryApp:recommend' %}" role="button">Reccomend</a>
+        </div>
+      </div>
+    </div>
+
+
+
+</div>
+
+
+
+{% endblock %}

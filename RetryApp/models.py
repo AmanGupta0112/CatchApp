@@ -36,6 +36,9 @@ class NewApplicationModel(models.Model):
     def __str__(self):
         return self.title
 
+    def save(self,*args,**kwargs):
+        super().save(*args,**kwargs)
+
     class Meta():
         db_table = 'New_App_Data'
 
@@ -51,6 +54,9 @@ class NewWebSiteModel(models.Model):
     def __str__(self):
         return self.title
 
+    def save(self,*args,**kwargs):
+        super().save(*args,**kwargs)
+
     class Meta():
         db_table = 'New_Web_Data'
 
@@ -65,6 +71,9 @@ class NewSoftwareModel(models.Model):
     def __str__(self):
         return self.title
 
+    def save(self,*args,**kwargs):
+        super().save(*args,**kwargs)
+
     class Meta():
         db_table = 'New_Soft_Data'
 
@@ -74,6 +83,9 @@ class SearchModel(models.Model):
 
     def __str__(self):
         return self.option
+
+    def save(self,*args,**kwargs):
+        super().save(*args,**kwargs)
 
     class Meta():
         db_table = 'Search_Item'

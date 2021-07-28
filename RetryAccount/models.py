@@ -178,7 +178,7 @@ class UserCreateModel(User, PermissionsMixin):
 
 class Profile(models.Model):
 
-    user = models.ForeignKey(User_o, on_delete=models.CASCADE)
+    user = models.OneToOneField(User_o, on_delete=models.CASCADE)
     image = models.ImageField(default = 'b4.jpg' , upload_to='profile_pics')
     # image_thumbnail = ImageSpecField(source= 'image', processors = [ResizeToFill(150,150)],format='JPEG', options = {'quality':60})
 
@@ -192,6 +192,9 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    def save(self,*args,**kwargs):
+        super(Profile, self).save(*args,**kwargs)
 
     class  Meta():
         db_table = "Profile"

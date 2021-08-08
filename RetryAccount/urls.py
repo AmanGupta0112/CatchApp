@@ -5,7 +5,6 @@ from . import views
 app_name = 'accounts'
 
 urlpatterns = [
-
     url(r'signup/$',views.SignUp.as_view(),name='signup'),
     url(r'profile/$',views.ProfileView.as_view(),name='profile'),
     url(r'detail/$',views.ProfileDetail.as_view(),name='detail'),

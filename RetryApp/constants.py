@@ -1,0 +1,5 @@
+NEW_RELEASE = "https://download.cnet.com/windows/?sort=newReleases"
+DOWNLOAD = "https://download.cnet.com"
+SOFTWARE = "https://filehippo.com/search/?q="
+POPULAR = "https://download.cnet.com/windows/?sort=mostPopular"
+WEBSITE = "https://www.semrush.com/website/"

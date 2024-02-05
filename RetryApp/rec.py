@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup as bs
 from RetryAccount import models
 from . import searched
 import random
+from .constants import DOWNLOAD
 
 
 def Recommend(request_post):
@@ -23,7 +24,7 @@ def Recommend(request_post):
         app_data.append(app)
 
     data_dict = {}
-    result = rs.get("https://download.cnet.com/s/"+str(st)+"/?platform=windows")
+    result = rs.get(f"{DOWNLOAD}s/{str(st)}/?platform=windows")
     soup = bs(result.text,"html.parser")
     list_d = soup.findAll('div',{'class':'g-grid-container u-grid-columns c-searchResults-search'})
 

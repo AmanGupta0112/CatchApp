@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,12 +21,12 @@ STATIC_DIR = os.path.join(BASE_DIR,'static')
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '3pqk*g01but8!*15w9audm4un!3yiauv$1v@0z$%=139)3y)m^'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG',cast=bool,default=True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -83,9 +84,9 @@ WSGI_APPLICATION = 'Retry.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'catchapp_data',
+        'NAME': 'retry',
         'USER': 'root',
-        'PASSWORD': 'admin',
+        'PASSWORD': 'Aman*0112',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -130,6 +131,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
+STATIC_ROOT = "assets/"
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = 'thanks'

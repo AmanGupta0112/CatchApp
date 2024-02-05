@@ -5,11 +5,12 @@ from textblob import TextBlob
 # import .Cred
 import numpy as np
 import re
+from decouple import config
 
-ACCESS_TOKEN = "1083114050693718016-3Hadji7d2JW30w11BJJrbspFr0h4SZ"
-ACCESS_TOKEN_SECRET = "bldJAY5hqYpBguQ65NckMqXnDBvpzZCf0NnHxOnXbQkm2"
-CONSUMER_KEY = "dSAxspkcnSq59gaRPlWT3Fxgk"
-CONSUMER_SECRET = "6qVBhFNm94pJeDk8x67OEETDTjwCdqMRk0nAcnAh4zduY899mz"
+ACCESS_TOKEN = config('ACCESS_TOKEN')
+ACCESS_TOKEN_SECRET = config('ACCESS_TOKEN_SECRET')
+CONSUMER_KEY = config('CONSUMER_KEY')
+CONSUMER_SECRET = config('CONSUMER_SECRET')
 
 class TwitterAuthenticator():
 

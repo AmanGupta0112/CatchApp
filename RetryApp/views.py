@@ -91,8 +91,6 @@ class NewWeb(generic.TemplateView):
     template_name = 'RetryApp/newweb.html'
 
 def searchview(request):
-    # import pdb; pdb.set_trace()
-
     option = request.GET.get('dropdown')
 
     if option == 'Application':
@@ -117,7 +115,10 @@ def searchview(request):
     elif option == 'Software':
         ans = request.GET.get('search-box')
         logo,download,detail,disc =  SoftwareDetails().searchedsoftware(ans)
-        sa_ls = tsa.Analysis(ans)
+        try:
+            sa_ls = tsa.Analysis(ans)
+        except:
+            sa_ls = ""
         data = {
         "Title":detail[1],
         "Size":detail[3],
@@ -140,7 +141,11 @@ def searchview(request):
         ans = request.GET.get('search-box')
 
         url,field_name,g_ranks_val,c_ranks_val,disc,Traffic_val,search_tra,p_search_tra,backlinks,logo = WebsiteDetails().searchedwebsite(ans)
-        sa_ls = tsa.Analysis(ans)
+        try:
+            sa_ls = tsa.Analysis(ans)
+        except Exception as e:
+            sa_ls = ""
+            print(e)
         return render(request,
                      'RetryApp/searched_web.html',
                      {

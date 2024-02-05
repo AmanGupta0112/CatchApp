@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup as bs
 from urllib.request import urlopen
 from urllib.parse import quote
 import time
-
+from .constants import NEW_RELEASE,DOWNLOAD,SOFTWARE,POPULAR,WEBSITE
 class AppDetails():
 
     def searchapp(self,app):
@@ -28,7 +28,7 @@ class SoftwareDetails():
     def searchedsoftware(self,soft):
         detail = []
         disc = []
-        result = rs.get("https://filehippo.com/search/?q="+str(soft))
+        result = rs.get(f"{SOFTWARE}{str(soft)}")
         soup = bs(result.text,"html.parser")
         list_d = soup.findAll('li',{'class':'list-programs__item'})
         try:
@@ -62,7 +62,7 @@ class SoftwareDetails():
     def NewRelease(self):
 
         data_dict = {}
-        result = rs.get("https://download.cnet.com/windows/?sort=newReleases")
+        result = rs.get(NEW_RELEASE)
         soup = bs(result.text,"html.parser")
         #
         list_d = soup.findAll('div',{'class':'c-globalCard lg:u-col-3 md:u-col-3 sm:u-col-2 c-productCard u-flexbox-column c-productCard-detailed'})
@@ -76,7 +76,7 @@ class SoftwareDetails():
                 data_list.append(disc)
                 img =  list_d[i].img['src']
                 data_list.append(img)
-                url = "https://download.cnet.com" +str(list_d[i].a['href'])
+                url = f"{DOWNLOAD}{str(list_d[i].a['href'])}"
                 data_list.append(url)
             except:
                 pass
@@ -87,7 +87,7 @@ class SoftwareDetails():
     def Trending(self):
 
         data_dict = {}
-        result = rs.get("https://download.cnet.com/windows/?sort=mostPopular")
+        result = rs.get(POPULAR)
         soup = bs(result.text,"html.parser")
         list_d = soup.findAll('div',{'class':'c-globalCard lg:u-col-3 md:u-col-3 sm:u-col-2 c-productCard u-flexbox-column c-productCard-detailed'})
 
@@ -100,7 +100,7 @@ class SoftwareDetails():
                 data_list.append(disc)
                 img =  list_d[i].img['src']
                 data_list.append(img)
-                url = "https://download.cnet.com" +str(list_d[i].a['href'])
+                url = f"{DOWNLOAD}{str(list_d[i].a['href'])}"
                 data_list.append(url)
             except:
                 pass
@@ -113,7 +113,7 @@ class WebsiteDetails():
 
     def searchedwebsite(self,web):
         
-        url = 'https://www.semrush.com/website/'+str(web)+'.com/'
+        url = f'{WEBSITE}{str(web)}.com/'
         try:
             result = rs.get(url)
 
